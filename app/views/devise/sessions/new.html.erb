@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sign up Page</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="d-flex justify-content-center h-100">
+        <div class="card">
+          <div class="card-header">
+            <h3>Log in</h3>
+          </div>
+          <div class="card-body">
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+              <table>
+                <tr>
+                  <td>
+                    <div class="field">
+                      <%= f.label :email %>
+                    </div>
+                  </td>
+                  <td>
+                    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="field">
+                    <%= f.label :password %>
+                    </div>
+                  </td>
+                  <td>
+                  <%= f.password_field :password, autocomplete: "current-password" %>
+                  </td>
+                </tr>
+              </table>
+              <div class="actions">
+                <%= f.submit "Log in" %>
+              </div>
+            <% end %>
+          </div>
+          <div class="card-footer">
+            <div class="d-flex justify-content-center links">
+              Don't have an account?<a href="/users/sign_up">Sign Up</a>
+            </div>
+            <div class="d-flex justify-content-center">
+              <a href="/users/password/new">Forgot your password?</a>
+            </div>
+            <% if notice %>
+              <p class="alert alert-success"><%= notice %></p>
+            <% end %>
+            <% if alert %>
+              <p class="alert alert-danger"><%= alert %></p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+

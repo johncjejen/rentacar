@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>New Car</title>
+	</head>
+	<body>
+		<div class="container">
+			<div class="d-flex justify-content-center h-100">
+				<div class="card">
+					<div class="card-header">
+						<%= form_tag({:controller => "cars", :action => "create_car"},:method => "post", :multipart => true, :class =>'') do %>
+							<table style="width: 90%;">
+								
+								<tr><h1 style="color:#ffffff;">New Car</h1></tr>
+								<tr><p align="center"><img src="<%= asset_path('logo_image.png') %>" width="150" height="100" border="3"></p></tr>
+								<tr><input style="border-radius: 10px;" type="file" name="photo" width="300" class="form-control"  required="" ></tr>
+								<tr>
+									<td><label style="color:#ffffff;">Name Car</label></td>
+									<td><input style="border-radius: 10px;" type="text" name="name_car" required="" ></td>
+								</tr><br>
+								<tr>
+									<td><label style="color:#ffffff;">Model</label></td>
+									<td><input style="border-radius: 10px;" type="text" name="model"  required="" ></td>
+									<br>
+								</tr>
+								<tr>
+									<td><label style="color:#ffffff;">Hour Cost</label></td>
+									<td><input style="border-radius: 10px;" type="number"  min="1" step="any" name="hour_cost"  required="" ></td>
+									<br>
+								</tr>
+								<tr>
+								<td><label style="color:#ffffff;">Description</label></td>
+								<td><textarea style="border-radius: 10px;" rows="2" cols="30"  name="description"  required="" ></textarea></td>
+								<br>
+								</tr>
+								<tr></tr>
+								<tr></tr>
+							</table>
+							<p><input type="submit" class="button button2" value="Create" style="padding:10px;width:150px;background-color:green;" >
+							<input type="submit"  class="button button2"  onclick="history.back()" value="Back" style="padding:10px;width:150px"><br></p>
+						<%end%>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

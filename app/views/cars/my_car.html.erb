@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My cars</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="d-flex justify-content-center h-100" align="center">
+                <%not_cars =@my_cars.length %>
+                <%if not_cars > 0%>
+                    <% @my_cars.each do |cars|%>
+                        <div class="card" style="padding:20px;max-width:300px">
+                            <h3 style="color:#ffffff;"><%=cars.name_car.upcase%></h3>
+                            <p align="center"><img src="<%=cars.photo %>" width="200" height="100" align="center"></p>
+                            <p><b>Description</b><br>
+                            <%=cars.description%></p>
+                            <p><b>Model</b><br>
+                            <%=cars.model%></p>
+                            <p><b>Hour Cost</b><br>
+                            <%=cars.hour_cost%></p>
+                            <p><b>Review</b><br>
+                            <%=cars.review%></p>
+                            <p><b>Rent Status</b><br>
+                            <%=cars.rent_status%></p>
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-center links">
+                                    <%= link_to "EDIT", "edit_car/#{cars.id}" %>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <a href="/"><button class="button button2" style="padding:10px;width:80px">BACK</button></a></p>
+                                </div>
+                            </div>
+                        </div>
+                    <%end%>
+                <%else%>
+                    <div class="card" style="padding:20px;max-width:300px">
+                        <h4>Not Cars yet</h4>
+                        <a href="/cars/new"><button class="button button2">Offer Car</button></a>
+                        <a href="/index/index">Home</a>
+                    </div>
+                <%end%>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

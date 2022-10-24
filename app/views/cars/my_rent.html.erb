@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My rents</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="d-flex justify-content-center h-100" align="center">
+                <%not_rents =@rents.length %>
+                <%if not_rents > 0%>
+                    <% @rents.each do |rents|%>
+                        <div class="card" style="padding:20px;max-width:300px; height:600px">
+                            <%= form_tag({:controller => "cars", :action => "cancel_reserve"},:method => "post", :multipart => true, :class =>'') do %>
+                                    <h3 style="color:#ffffff;">Rent Code <%=rents.id%></h3>
+                                    <p align="center"><img src="<%=rents.photo %>" width="200" height="100" align="center"> </p>
+                                    <p><b><%=rents.name_car.upcase%></b></p>
+                                    <p><b>Rent Time: </b><%=rents.rent_hours%> Hours</p>
+                                    <p><b>Rent Cost: </b>$ <%=rents.rent_cost%> </p>
+                                    <p><b>Rent Date From: </b><%=rents.rent_date%> </p>
+                                    <p><b>Rent Date To: </b><%=rents.rent_date_to%> </p>
+                                    <p><b>Rent Status: </b><%=rents.rent_status%> </p>
+                                        <p><b>Your Review: </b><%=rents.review%> </p>
+                                        <input type="hidden" name="rent_id" requiered= "" value="<%=rents.id%>">
+                                    <%if rents.rent_status == "Activated" %>
+                                        <%= link_to "Modify Rent", "modify_rent/#{rents.id}" %><br>
+                                        <input type="submit" value="Cancel Rent" class="button button2" style="padding:10px;width:110px;background-color:red"><br>
+                                    <%end%>
+                            <%end%>
+                                    <%if rents.review.nil? and rents.rent_status == "Rent Ended" %>
+                                        <h10 style="color:red">Pend. Review</h10><br>
+                                        <%= form_tag({:controller => "cars", :action => "review"},:method => "post", :multipart => true, :class =>'') do %>
+                                        <input type="hidden" name="rent_id" requiered= "" value="<%=rents.id%>">
+                                        <select name="review_car" id="review_car">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                            <input type="submit" value="Review" class="login_btn">
+                                        <%end%>
+                                   <%else%>
+                                    <p><br><br></p>
+                                    <%end%>
+                            
+                          
+                             <a href="/"><button class="button button2" style="padding:10px;width:80px">BACK</button></a></p>
+                        </div>
+                    <%end%>
+                <%else%>
+                    <div class="card" style="padding:20px;max-width:300px">
+                        <h4>Not Rents yet</h4>
+                        <button class="button button2" style="padding:10px;width:140px"><a href="/cars/index">Search Car</a></button>
+                        <a href="/index/index">Home</a>
+                    </div>
+                <%end%>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  car: one
+  rent_horus: 1
+  rent_cost: 1.5
+  user: one
+  rent_status: MyString
+
+two:
+  car: two
+  rent_horus: 1
+  rent_cost: 1.5
+  user: two
+  rent_status: MyString

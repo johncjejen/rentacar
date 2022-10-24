@@ -1,0 +1,2 @@
+class CarImg < ApplicationRecord
+end

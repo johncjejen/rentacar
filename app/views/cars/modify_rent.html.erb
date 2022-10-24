@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Modify Rent</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="d-flex justify-content-center h-100" align="center">
+                 <div class="card" style="padding:15px;max-width:300px;max-height:800px">
+                    <%= form_tag({:controller => "cars", :action => "reserve_car"},:method => "post", :multipart => true, :class =>'') do %>
+                        <h3 style="color:#ffffff;"><%=@rent_modify.name_car.upcase%></h3>
+                        <p align="center">    <img src="<%=@rent_modify.photo %>" width="200" height="100" align="center"> </p>
+                        <p><b>Model</b><br>
+                        <%=@rent_modify.model%></p>
+                        <p><b>Hour Cost</b><br>
+                        <%=@rent_modify.hour_cost%></p>
+                        <p><b>Rent Status</b><br>
+                        <%=@rent_modify.rent_status%></p>
+                        <input type="hidden" name="rent_id" requiered= "" value="<%=@rent_modify.id%>">
+                        <% if flash[:total_rent]%>
+                            <input type="hidden" name="rent_hours" requiered= "" value="<%= flash[:rent_hours]%>">
+                            <input type="hidden" name="date_from" requiered= "" value="<%= flash[:date_from]%>">
+                            <input type="hidden" name="date_to" requiered= "" value="<%= flash[:date_to]%>">
+                            <p><b>Cost Rent</b><br>
+                            <b>$</b><input style="border-radius: 10px;width: 70px; align: center" type="text" name="cost_rent" readonly required="" value="<%=flash[:total_rent]%>"></p>
+                            <input type="submit" value="Rent" class="button button2" style="padding:15px;width:110px;background-color:rgb(13, 220, 113)">
+                            <a href="/cars/index"><button class="button button2" style="padding:15px;width:110px">Back</button></a><br></td>
+                        <%end%>
+                         <% if flash[:invalid_hour]%>
+                            <p class="alert alert-danger"><b><%= flash[:invalid_hour]%><br>
+                        <%end%>
+                    <%end%>
+                    <% if !flash[:total_rent]%>
+                        <%= form_tag({:controller => "cars", :action => "calculate_cost_rent"},:method => "post", :multipart => true, :class =>'') do %>
+                            
+                            <p><b>Rent Date From</b><br>
+                            <input type="datetime-local" style="border-radius: 10px;" requiered= "" id="reserve_date_from" name="reserve_date_from" min="<%=Time.new.strftime('%FT%R')%>" value="<%=Time.new.strftime('%FT%R')%>"  ></p>
+                            <p><b>Rent Date To</b><br>
+                            <input type="datetime-local" style="border-radius: 10px;" requiered= "" id="reserve_date_to" name="reserve_date_to" min="<%=Time.new.strftime('%FT%R')%>" value="<%=Time.new.strftime('%FT%R')%>" ></p>
+                            <input type="hidden" name="rent_id" requiered= "" value="<%=@rent_modify.id%>">
+                            <input type="hidden" name="hour_cost" readonly  value="<%=@rent_modify.hour_cost%>">
+                            <input type="hidden" name="url_h" readonly  value="<%=request.url%>">
+                            <input type="submit" value="Calculate" class="button button2" style="padding:15px;width:110px;background-color:rgb(13, 220, 113)">
+                            <a href="/cars/index"><button class="button button2" style="padding:15px;width:110px">Back</button></a>
+                           </td>
+                        <%end%>
+                    <%end%>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login Page</title>
+</head>
+<body>
+<div class="container">
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header">
+				<div align="center">
+					<p align="center"><img src="<%= asset_path('cars_image.png') %>" width="450" height="200" border="3"></p>
+					<a href="/cars/my_car"><button class="button button2">My Cars</button></a>
+					<a href="/cars/new"><button class="button button2">Offer Car</button></a>
+					<a href="/cars/index"><button class="button button2">Rent Car</button></a>
+					<a href="/cars/my_rent"><button class="button button2">My Rents</button></a><br>
+				</div>
+			</div>
+			<div>
+				<p>
+					<% if flash[:car_save]%>
+						<p class="alert alert-success"><%=flash[:car_save]%></p>
+					<% end %>
+					<% if flash[:rent_car]%>
+						<p class="alert alert-success"><%=flash[:rent_car]%></p>
+					<% end %>
+					<% if flash[:cancel_rent]%>
+						<p class="alert alert-success"><%=flash[:cancel_rent]%></p>
+					<% end %>
+					<% if flash[:review_rent]%>
+						<p class="alert alert-success"><%=flash[:review_rent]%></p>
+					<% end %>
+					<% if flash[:not_rent_car]%>
+						<p class="alert alert-danger"><%=flash[:not_rent_car]%></p>
+					<% end %>
+					<% if user_signed_in? %>
+						Connected as <%= current_user.email %>. Isn't that you?
+						<%= link_to "Log off", destroy_user_session_path, :method => :delete%>
+					<% else %>
+						<%= link_to "Sign up", new_user_registration_path %> o
+						<%= link_to "Login", new_user_session_path %>
+					<% end %>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

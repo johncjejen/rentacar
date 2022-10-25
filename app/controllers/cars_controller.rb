@@ -220,8 +220,8 @@ class CarsController < ApplicationController
         region = 'us-east-1'
         acl = "public-read"
         Aws.config = {
-            :access_key_id => 'AKIATUERXOPZLZBS2BFO',
-            :secret_access_key => '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',
+            :access_key_id => 'hjghh',
+            :secret_access_key => 'hhgh',
             :region => 'us-east-1'
         }
     

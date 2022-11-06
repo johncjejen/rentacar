@@ -9,7 +9,7 @@
                  <div class="card" style="padding:15px;max-width:300px;max-height:800px">
                     <%= form_tag({:controller => "cars", :action => "reserve_car"},:method => "post", :multipart => true, :class =>'') do %>
                         <h3 style="color:#ffffff;"><%=@cars.name_car.upcase%></h3>
-                        <p align="center">    <img src="<%=@cars.photo %>" width="200" height="100" align="center"> </p>
+                        <p align="center">    <img src="<%=@img_view_car['url_img'] %>" class='img_cars'> </p>
                         <p><b>Description</b><br>
                         <%=@cars.description%></p>
                         <p><b>Model</b><br>
@@ -27,8 +27,13 @@
                             <input type="hidden" name="date_to" requiered= "" value="<%= flash[:date_to]%>">
                             <p><b>Cost Rent</b><br>
                             <b>$</b><input style="border-radius: 10px;width: 70px; align: center" type="text" name="cost_rent" readonly required="" value="<%=flash[:total_rent]%>"></p>
-                            <input type="submit" value="Rent" class="button button2" style="padding:15px;width:110px;background-color:rgb(13, 220, 113)">
-                            <a href="/cars/index"><button class="button button2" style="padding:15px;width:110px">Back</button></a><br></td>
+                             <% if user_signed_in? %>
+                                        <input type="submit" value="Rent" class="button button2" style="padding:15px;width:110px;background-color:rgb(13, 220, 113)">
+                                        <a href="/cars/index"><button class="button button2" style="padding:15px;width:110px">Back</button></a><br></td>
+                            <% else %>
+                                <%= link_to "Sign up", new_user_registration_path %> 
+                                <%= link_to "Login", new_user_session_path %>
+                            <% end %>
                         <%end%>
                          <% if flash[:invalid_hour]%>
                             <p class="alert alert-danger"><b><%= flash[:invalid_hour]%><br>

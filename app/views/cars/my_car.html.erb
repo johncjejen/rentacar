@@ -9,22 +9,22 @@
                 <%not_cars =@my_cars.length %>
                 <%if not_cars > 0%>
                     <% @my_cars.each do |cars|%>
-                        <div class="card" style="padding:20px;max-width:300px">
-                            <h3 style="color:#ffffff;"><%=cars.name_car.upcase%></h3>
-                            <p align="center"><img src="<%=cars.photo %>" width="200" height="100" align="center"></p>
+                        <div class="cardcars" style="padding:20px;max-width:300px">
+                            <h3 style="color:#ffffff;"><%=cars['name_car'].upcase%></h3>
+                            <p align="center"><img src="<%=cars['photof']%>" class='img_cars'></p>
                             <p><b>Description</b><br>
-                            <%=cars.description%></p>
+                            <%=cars['description']%></p>
                             <p><b>Model</b><br>
-                            <%=cars.model%></p>
+                            <%=cars['model']%></p>
                             <p><b>Hour Cost</b><br>
-                            <%=cars.hour_cost%></p>
+                            <%=cars['hour_cost']%></p>
                             <p><b>Review</b><br>
-                            <%=cars.review%></p>
+                            <%=cars['review']%></p>
                             <p><b>Rent Status</b><br>
-                            <%=cars.rent_status%></p>
+                            <%=cars['rent_status']%></p>
                             <div class="card-footer">
                                 <div class="d-flex justify-content-center links">
-                                    <%= link_to "EDIT", "edit_car/#{cars.id}" %>
+                                    <%= link_to "EDIT", "edit_car/#{cars['id']}" %>
                                 </div>
                                 <div class="d-flex justify-content-center">
                                     <a href="/"><button class="button button2" style="padding:10px;width:80px">BACK</button></a></p>

@@ -9,7 +9,7 @@
                  <div class="card" style="padding:15px;max-width:300px;max-height:800px">
                     <%= form_tag({:controller => "cars", :action => "reserve_car"},:method => "post", :multipart => true, :class =>'') do %>
                         <h3 style="color:#ffffff;"><%=@rent_modify.name_car.upcase%></h3>
-                        <p align="center">    <img src="<%=@rent_modify.photo %>" width="200" height="100" align="center"> </p>
+                        <p align="center">    <img src="<%=@rent_modify.img_car %>" class='img_cars'> </p>
                         <p><b>Model</b><br>
                         <%=@rent_modify.model%></p>
                         <p><b>Hour Cost</b><br>
@@ -24,7 +24,7 @@
                             <p><b>Cost Rent</b><br>
                             <b>$</b><input style="border-radius: 10px;width: 70px; align: center" type="text" name="cost_rent" readonly required="" value="<%=flash[:total_rent]%>"></p>
                             <input type="submit" value="Rent" class="button button2" style="padding:15px;width:110px;background-color:rgb(13, 220, 113)">
-                            <a href="/cars/index"><button class="button button2" style="padding:15px;width:110px">Back</button></a><br></td>
+                            <%# <a href="/cars/index"><button class="button button2" style="padding:15px;width:110px">Back</button></a><br></td> %>
                         <%end%>
                          <% if flash[:invalid_hour]%>
                             <p class="alert alert-danger"><b><%= flash[:invalid_hour]%><br>
@@ -41,10 +41,11 @@
                             <input type="hidden" name="hour_cost" readonly  value="<%=@rent_modify.hour_cost%>">
                             <input type="hidden" name="url_h" readonly  value="<%=request.url%>">
                             <input type="submit" value="Calculate" class="button button2" style="padding:15px;width:110px;background-color:rgb(13, 220, 113)">
-                            <a href="/cars/index"><button class="button button2" style="padding:15px;width:110px">Back</button></a>
+                            <%# <a href="/cars/index"><button class="button button2" style="padding:15px;width:110px">Back</button></a> %>
                            </td>
                         <%end%>
                     <%end%>
+                    <a href="/cars/index"><button class="button button2" style="padding:15px;width:110px">Back</button></a>
                 </div>
             </div>
         </div>

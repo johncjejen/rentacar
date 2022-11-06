@@ -8,9 +8,9 @@
 	        <div class="d-flex justify-content-center h-100" align="center">
                 <% if !@cars.blank? %>
                     <% @cars.each do |cars| %>
-                        <div class="card" style="padding:20px;max-width:300px">
+                        <div class="cardcars">
                             <h3 style="color:#ffffff;"><%=cars['name_car'].upcase%></h3>
-                            <p align="center"><img src="<%=cars['photof'] %>" width="200" height="100" align="center"></p>
+                            <p align="center"><img src="<%=cars['photof'] %>" class='img_cars'></p>
                             <p><b>Description</b><br>
                             <%=cars['description']%></p>
                             <p><b>Model</b><br>
@@ -23,27 +23,17 @@
                             <%=cars['rent_status']%></p>
                             <div class="card-footer">
                                 <div class="d-flex justify-content-center links">
-                                    <% if user_signed_in? %>
-                                        <button class="button button2" style="padding:10px;width:88px"><%= link_to "SELECT", "view_car/#{cars['id']}" %></button>
-                                        <a href="/index/index"><button class="button button2" style="padding:10px;width:80px">Home</button></a></p>
-                                    <% else %>
-                                        <%= link_to "Sign up", new_user_registration_path %> 
-                                        <%= link_to "Login", new_user_session_path %>
-                                   <% end %>
+                                    <button class="button button2" style="padding:10px;width:88px"><%= link_to "Select", "view_car/#{cars['id']}", class:"linkto", :style=>'text-decoration : none' %></button>
+                                    <a href="/index/index"><button class="button button2" style="padding:10px;width:88px">Home</button></a></p>
                                 </div>
                             </div>
                         </div>
                     <%end%>
                 <%else%>
-                    <div class="card" style="padding:20px;max-width:300px">
+                    <div class="card">
                         <h4>Not Cars yet</h4>
-                        <% if user_signed_in? %>
                             <a href="/cars/new"><button class="button button2">Offer Car</button></a>
                             <a href="/index/index">Home</a></p>
-                        <% else %>
-                                <%= link_to "Sign up", new_user_registration_path %> 
-                                <%= link_to "Login", new_user_session_path %>
-                        <% end %>
                     </div>
                 <%end%>
             </div>

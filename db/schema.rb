@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_23_232328) do
+ActiveRecord::Schema.define(version: 2022_11_05_194230) do
 
   create_table "car_has_rents", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "car_id", null: false
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2022_09_23_232328) do
     t.float "rent_cost"
     t.bigint "user_id", null: false
     t.string "rent_status"
+    t.string "img_car"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["car_id"], name: "index_car_has_rents_on_car_id"

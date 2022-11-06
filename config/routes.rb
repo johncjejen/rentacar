@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     get '/users/sign_out' => 'devise/sessions#destroy'     
   end
 
-  root :to => "cars#index"
+  root :to => "index#profile"
 
   namespace :cars do
 
@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   namespace :index do
 
     get:index
+    get:profile
   end
   get "cars/view_car/:id" => 'cars#view_car'
   get "cars/edit_car/:id" => 'cars#edit_car'

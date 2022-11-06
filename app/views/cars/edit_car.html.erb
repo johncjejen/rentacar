@@ -11,7 +11,7 @@
 					<%= form_tag({:controller => "cars", :action => "create_car"},:method => "post", :multipart => true, :class =>'') do %>
 						<table style="width: 90%;">
 							<tr><h1 style="color:#ffffff;">New Car</h1></tr>
-							<tr><p align="center"><img src="<%= !@cars.blank? ?  @cars.photo : '' %>" width="200" height="100" align="center"></p></tr>
+							<tr><p align="center"><img src="<%= !@cars.blank? ?  @imagecar.url_img : '' %>" class='img_cars'></p></tr>
 							<tr><input style="border-radius: 10px;" type="file" name="photo" width="300" class="form-control" ></tr>
 							<tr>
 								<td><label style="color:#ffffff;">Name Car</label></td>

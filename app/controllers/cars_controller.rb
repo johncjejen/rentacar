@@ -1,6 +1,6 @@
 class CarsController < ApplicationController
     before_action :configure_permitted_parameters, if: :devise_controller?
-    before_action :authenticate_user!, except:[:index]
+    before_action :authenticate_user!, except:[:index,:view_car,:reserve_car,:calculate_cost_rent]
 
     def new 
         @cars = Car.new
@@ -21,13 +21,14 @@ class CarsController < ApplicationController
         @cars.user_id = current_user.id
         @cars.save
 
-        image = nil
-        image = save_file_AWS(params[:photo],'images_car', @cars.id) if id_car.blank?
+        image=nil
+        # with AWS image = save_file(params[:photo],'images_car', @cars.id) if id_car.blank?
+        image = save_file(params[:photo],'images_car',@cars.id) if id_car.blank?
 
         flash[:car_save] = "Create Car succesful" if id_car.blank?
         flash[:car_save] = "Edit Car succesful" if !id_car.blank?
 
-        redirect_to '/'
+        redirect_to '/index/index.html'
     end
 
     def reserve_car
@@ -45,6 +46,7 @@ class CarsController < ApplicationController
             rent_date = params[:date_from]
             rent_date_to = params[:date_to]
             @rent_car = CarHasRent.find(rent_id) if !rent_id.blank?
+           
             id_car = params[:id_car]
             id_car = @rent_car.car_id if params[:id_car].blank?
             hours = params[:rent_hours].to_i
@@ -53,6 +55,8 @@ class CarsController < ApplicationController
             @cars.rent_status = "Not Available"
             @cars.save
 
+            img_car = CarImg.select('url_img').where('cars_id=?',@cars.id).take
+           
             @rent_car = CarHasRent.new if rent_id.blank?
             @rent_car.car_id = id_car
             @rent_car.rent_hours = hours
@@ -61,14 +65,15 @@ class CarsController < ApplicationController
             @rent_car.rent_cost = cost_rent
             @rent_car.user_id = current_user.id
             @rent_car.rent_status = "Activated"
+            @rent_car.img_car = img_car.url_img
             @rent_car.save
 
             flash[:rent_car] = "Rent Car Succesful"
             flash[:rent_car] = "Modify Car Succesful" if !rent_id.blank?
-            redirect_to '/'
+            redirect_to '/index/index.html'
         else
             flash[:not_rent_car] = "User with Rent Active"
-            redirect_to '/'
+            redirect_to '/index/index.html'
         end
     end
 
@@ -86,7 +91,7 @@ class CarsController < ApplicationController
 
         valid_hour = (hour_to - hour_from)
 
-        if valid_hour >= 10800  and valid_hour <= 129600
+        if valid_hour >= 10800  and valid_hour <= 1296000
 
             hours = (valid_hour / 3600).to_i
             total_rent = (hours * cost)
@@ -98,8 +103,6 @@ class CarsController < ApplicationController
             flash[:invalid_hour] = "Invalid Hour"
         end
 
-
-       
         redirect_to url
     end
 
@@ -120,9 +123,9 @@ class CarsController < ApplicationController
 
             flash[:cancel_rent] = "Cancel Rent Succesful"
 
-            redirect_to '/'
+            redirect_to '/index/index.html'
         else
-            redirect_to '/'
+            redirect_to '/index/index.html'
         end
     end
 
@@ -143,19 +146,30 @@ class CarsController < ApplicationController
         car.review = review_final
         car.save
         flash[:review_rent] = "Review Car Succesful"
-        redirect_to '/'
+        redirect_to '/index/index.html'
 
     end
     
     def my_car
 
-        @my_cars=Car.where("user_id=?",current_user.id)
+        @my_cars=Car.where("user_id=?",current_user.id).as_json
+
+        cars_image = CarImg.all
+
+        @my_cars.each do |car|
+            photo = cars_image.select{|p| p['cars_id'] == car['id'] }
+            car['photof'] = photo[0].url_img
+        end
+
         
     end
 
     def edit_car
         id_car=params[:id]
         @cars = Car.find(id_car) if !id_car.blank?
+        @imagecar = CarImg.where('cars_id=?', @cars.id).take 
+        p '++++++++++++'
+        p @imagecar
     end
 
     def index
@@ -165,8 +179,6 @@ class CarsController < ApplicationController
         @cars.each do |car|
             photo = @cars_image.select{|p| p['cars_id'] == car['id'] }
             car['photof'] = photo[0].url_img
-            p '+++++++++++++++'
-            p photo[0].url_img
         end
     end
 
@@ -190,6 +202,7 @@ class CarsController < ApplicationController
     def view_car
         id_car = params[:id]
         @cars = Car.find(id_car) if !id_car.blank?
+        @img_view_car = CarImg.where('cars_id=?', id_car).first
     end
 
     def modify_rent
@@ -199,7 +212,7 @@ class CarsController < ApplicationController
 
     private
 
-    def save_file(file,folder_img)
+    def save_file(file,folder_img,car_id)
             ########SAVE images
             folder = "#{Rails.root}/public/#{folder_img}"
             name_file = (Time.new.to_s+'_'+file.original_filename).gsub(' ','')
@@ -207,7 +220,11 @@ class CarsController < ApplicationController
             File.open(path, "wb") { |f| f.write(file.read) };
             ################
             path_save = '/'+folder_img+'/'+name_file
-            return path_save 
+            photo = CarImg.new
+            photo.url_img = path_save
+            photo.cars_id = car_id
+            photo.save
+           
     end
 
     def save_file_AWS(file,folder_img,car_id)
@@ -274,10 +291,10 @@ class CarsController < ApplicationController
     def upload_file(file_path)
         @object.upload_file(file_path)
         true
-    rescue Aws::Errors::ServiceError => e
-        puts "Couldn't upload file #{file_path} to #{@object.key}. Here's why: #{e.message}"
-        false
-    end
+        rescue Aws::Errors::ServiceError => e
+            puts "Couldn't upload file #{file_path} to #{@object.key}. Here's why: #{e.message}"
+            false
+        end
     end
 
 end

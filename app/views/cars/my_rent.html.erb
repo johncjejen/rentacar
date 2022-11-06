@@ -9,10 +9,10 @@
                 <%not_rents =@rents.length %>
                 <%if not_rents > 0%>
                     <% @rents.each do |rents|%>
-                        <div class="card" style="padding:20px;max-width:300px; height:600px">
+                        <div class="cardcars">
                             <%= form_tag({:controller => "cars", :action => "cancel_reserve"},:method => "post", :multipart => true, :class =>'') do %>
                                     <h3 style="color:#ffffff;">Rent Code <%=rents.id%></h3>
-                                    <p align="center"><img src="<%=rents.photo %>" width="200" height="100" align="center"> </p>
+                                    <p align="center"><img src="<%=rents.img_car %>" class='img_cars'> </p>
                                     <p><b><%=rents.name_car.upcase%></b></p>
                                     <p><b>Rent Time: </b><%=rents.rent_hours%> Hours</p>
                                     <p><b>Rent Cost: </b>$ <%=rents.rent_cost%> </p>

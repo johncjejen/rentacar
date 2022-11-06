@@ -168,8 +168,6 @@ class CarsController < ApplicationController
         id_car=params[:id]
         @cars = Car.find(id_car) if !id_car.blank?
         @imagecar = CarImg.where('cars_id=?', @cars.id).take 
-        p '++++++++++++'
-        p @imagecar
     end
 
     def index
